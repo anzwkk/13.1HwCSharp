@@ -8,8 +8,8 @@ class Program
     public string choice;
     public void Main()
     {
-       
-        while (true) 
+
+        while (true)
         {
             Console.WriteLine("Список справ");
             Console.WriteLine("1. Додати справу");
@@ -19,7 +19,7 @@ class Program
             Console.WriteLine("Оберіть опцію(1-4): ");
             choice = Console.ReadLine();
 
-          
+
         }
     }
     public void AddTask()
@@ -27,12 +27,12 @@ class Program
         Console.Write("Введіть назву справи: ");
         string task = Console.ReadLine();
 
-        if ( taskCount >= tasks.Length)
+        if (taskCount >= tasks.Length)
         {
             Console.WriteLine("Список заповнений. Додати нову справу неможливо");
             return;
         }
-        else if(string.IsNullOrEmpty(task))
+        else if (string.IsNullOrEmpty(task))
         {
             Console.WriteLine("Назва справи не може бути пустою");
             return;
@@ -42,5 +42,18 @@ class Program
         taskCount++;
         Console.WriteLine("Справу додано");
     }
-    
+    public void DisplayTasks()
+    {
+        Console.WriteLine("Ваші справи:");
+        if (taskCount == 0)
+        {
+            Console.WriteLine("Список ваших справ порожній");
+            return;
+        }
+        for (int i = 0; i < taskCount; i++)
+        {
+            string status = isCompleted[i] ? "Виконано" : "Невиконано";
+            Console.WriteLine($"{i + 1}. {tasks[i]} {status}");
+        }
+    }
 }
