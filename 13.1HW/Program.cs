@@ -1,12 +1,12 @@
 ﻿using System;
+using System.Reflection;
 
 class Program
 {
-    public string[] tasks = new string[100];
-    public bool[] isCompleted = new bool[100];
-    public int taskCount = 0;
-    public string choice;
-    public void Main()
+    static string[] tasks = new string[100];
+    static bool[] isCompleted = new bool[100];
+    static int taskCount = 0;
+    public static void Main()
     {
 
         while (true)
@@ -17,12 +17,23 @@ class Program
             Console.WriteLine("3. Відмітити справу як виконану");
             Console.WriteLine("4. Видалити справу");
             Console.WriteLine("Оберіть опцію(1-4): ");
-            choice = Console.ReadLine();
+            string choice = Console.ReadLine();
 
-
+            switch(choice)
+            {
+                case "1":
+                    AddTask();
+                    break;
+                case "2":
+                    DisplayTasks();
+                    break;
+                case "3":
+                    MarkTaskCompleted();
+                    break;
+            }
         }
     }
-    public void AddTask()
+    static void AddTask()
     {
         Console.Write("Введіть назву справи: ");
         string task = Console.ReadLine();
@@ -42,7 +53,7 @@ class Program
         taskCount++;
         Console.WriteLine("Справу додано");
     }
-    public void DisplayTasks()
+    static void DisplayTasks()
     {
         Console.WriteLine("Ваші справи:");
         if (taskCount == 0)
@@ -55,5 +66,29 @@ class Program
             string status = isCompleted[i] ? "Виконано" : "Невиконано";
             Console.WriteLine($"{i + 1}. {tasks[i]} {status}");
         }
+    }
+    static void MarkTaskCompleted()
+    {
+        Console.Write("Введіть номер справи для відмітки як виконаної: ");
+        string input = Console.ReadLine();
+        int index;
+
+        if (taskCount == 0)
+        {
+            Console.WriteLine("Список справ порожній.");
+            return;
+        }
+        else if (!int.TryParse(input, out index))
+        {
+            Console.WriteLine("Введіть коректне число");
+            return;
+        }
+        else if (index < 1 || index > taskCount)
+        {
+            Console.WriteLine("Номер справи виходить за межі списку");
+            return;
+        }
+        isCompleted[index - 1] = true;
+        Console.WriteLine("Справу відмічено як виконану");
     }
 }
