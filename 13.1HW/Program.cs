@@ -30,6 +30,9 @@ class Program
                 case "3":
                     MarkTaskCompleted();
                     break;
+                case "4":
+                    DeleteTask();
+                    break;
             }
         }
     }
@@ -85,10 +88,35 @@ class Program
         }
         else if (index < 1 || index > taskCount)
         {
-            Console.WriteLine("Номер справи виходить за межі списку");
+            Console.WriteLine("Такої справи немає");
             return;
         }
         isCompleted[index - 1] = true;
         Console.WriteLine("Справу відмічено як виконану");
+    }
+    static void DeleteTask()
+    {
+        Console.Write("Введіть номер справи для видалення: ");
+        string input = Console.ReadLine();
+        int index;
+
+        if (!int.TryParse(input, out index))
+        {
+            Console.WriteLine("Введіть коректне число");
+            return;
+        }
+        else if (index < 1 || index > taskCount)
+        {
+            Console.WriteLine("Такої справи немає");
+            return;
+        }
+        for (int i = index - 1; i < taskCount - 1; i++)
+        {
+            tasks[i] = tasks[i + 1];
+            isCompleted[i] = isCompleted[i + 1];
+        }
+        taskCount--;
+        Console.WriteLine("Справу видалено");
+
     }
 }
